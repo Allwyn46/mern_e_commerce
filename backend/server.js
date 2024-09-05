@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 require('dotenv').config()
 
-console.log
-
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => console.log('Database Connected Successfully'))
