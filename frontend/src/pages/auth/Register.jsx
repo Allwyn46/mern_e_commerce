@@ -1,6 +1,6 @@
+import React, { useState } from 'react'
 import CommonForm from '@/components/common/CommonForm'
 import { registerFormControls } from '@/config/config'
-import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const initialState = {
