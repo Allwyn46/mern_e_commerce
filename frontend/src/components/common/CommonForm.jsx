@@ -96,8 +96,8 @@ const CommonForm = ({ formControls, formData, setFormData, onSubmit, buttonText 
             <div className='flex flex-col gap-3'>
                 {
                     formControls.map((control) => (
-                        <div key={control.name} className='grid w-full gap-1.5'>
-                            <Label className="mb-1">
+                        <div key={control.name} className='grid w-full gap-1.5 mb-2'>
+                            <Label className="mb-1 text-left">
                                 {control.label}
                             </Label>
 
