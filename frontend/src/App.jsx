@@ -18,10 +18,10 @@ import UnAuth from './pages/others/UnAuth'
 
 function App() {
 
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const user = {
     name: 'Allwyn',
-    role: 'admin'
+    role: 'user'
   };
 
   return (
