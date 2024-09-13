@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const connectDb = require('./config/dbConnection');
+const errorHandler = require('./middlewares/errorHandler');
 require('dotenv').config();
 
 // CONNECTING DB
@@ -28,5 +29,6 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`server is now running ${PORT}`));
