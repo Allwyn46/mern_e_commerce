@@ -5,6 +5,7 @@ const cors = require('cors');
 const connectDb = require('./config/dbConnection');
 const errorHandler = require('./middlewares/errorHandler');
 require('dotenv').config();
+const authRouter = require('./routes/auth/authRoutes');
 
 // CONNECTING DB
 connectDb();
@@ -29,6 +30,8 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(errorHandler)
+app.use(errorHandler);
+
+app.use('/api/auth', authRouter);
 
 app.listen(PORT, () => console.log(`server is now running ${PORT}`));

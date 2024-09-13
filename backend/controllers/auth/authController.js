@@ -5,7 +5,7 @@ const User = require('../../models/User');
 
 // REGISTER
 
-const register = asyncHandler(async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
     const { userName, email, password } = req.body;
 
     if (!userName || !email || !password) {
@@ -42,3 +42,5 @@ const register = asyncHandler(async (req, res) => {
         throw new Error('User Data Not Valid');
     }
 });
+
+module.exports = { registerUser };
