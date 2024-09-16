@@ -21,7 +21,7 @@ const Register = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(registerUserAction(formData).then(() => navigate('/auth/login')))
+        dispatch(registerUserAction(formData)).then(() => navigate('/auth/login'))
     }
 
     return (
