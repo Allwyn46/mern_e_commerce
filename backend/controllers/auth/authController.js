@@ -33,7 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (newUser) {
         res.status(201).json({
             success: true,
-            message: 'User Created Successfully',
+            message: 'Account Created SuccessFully',
             _id: newUser.id,
             email: newUser.email,
         });

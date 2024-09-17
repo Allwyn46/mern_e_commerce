@@ -4,6 +4,7 @@ import { registerFormControls } from '@/config/config'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { registerUserAction } from '@/store/auth-slice'
+import { toast } from 'sonner'
 
 const initialState = {
     userName: '',
@@ -21,7 +22,12 @@ const Register = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(registerUserAction(formData)).then(() => navigate('/auth/login'))
+        dispatch(registerUserAction(formData)).then((data) => {
+            if (data?.payload?.success) {
+                toast(data?.payload?.message)
+                navigate('/auth/login')
+            }
+        })
     }
 
     return (
