@@ -17,8 +17,11 @@ const registerUser = asyncHandler(async (req, res) => {
     const availableUser = await User.findOne({ email });
 
     if (availableUser) {
-        res.status(400);
-        throw new Error('User Already Registered');
+        // res.status(400);
+        return res.json({
+            success: false,
+            message: 'Email Already Registered',
+        });
     }
 
     const hashedPass = await bcrypt.hash(password, 12);
@@ -40,6 +43,23 @@ const registerUser = asyncHandler(async (req, res) => {
     } else {
         res.status(400);
         throw new Error('User Data Not Valid');
+    }
+});
+
+// LOGIN
+
+const loginUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400);
+        throw new Error('All fields are Required!');
+    }
+
+    // CHECKING WHETHER THE EMAIL IS ALREADY REGISTERED
+    const registeredUser = await User.findOne({ email });
+
+    if (registeredUser) {
     }
 });
 
