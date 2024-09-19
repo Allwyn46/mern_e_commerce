@@ -7,12 +7,33 @@ const initialState = {
     user: null,
 };
 
+// REGISTER THUNK
 export const registerUserAction = createAsyncThunk(
     '/auth/register',
     async (formData) => {
-        const response = await axios.post('http://localhost:5000/api/auth/register', formData, {
-            withCredentials: true,
-        });
+        const response = await axios.post(
+            'http://localhost:5000/api/auth/register',
+            formData,
+            {
+                withCredentials: true,
+            }
+        );
+
+        return response.data;
+    }
+);
+
+// LOGIN THUNK
+export const loginUserAction = createAsyncThunk(
+    '/auth/login',
+    async (formData) => {
+        const response = await axios.post(
+            'http://localhost:5000/api/auth/login',
+            formData,
+            {
+                withCredentials: true,
+            }
+        );
 
         return response.data;
     }
@@ -35,6 +56,21 @@ const authSlice = createSlice({
                 state.isAuthenticated = false;
             })
             .addCase(registerUserAction.rejected, (state, action) => {
+                state.isLoading = false;
+                state.user = null;
+                state.isAuthenticated = false;
+            })
+            .addCase(loginUserAction.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(loginUserAction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = !action.payload.success
+                    ? null
+                    : action.payload.user;
+                state.isAuthenticated = !action.payload.success ? false : true;
+            })
+            .addCase(loginUserAction.rejected, (state, action) => {
                 state.isLoading = false;
                 state.user = null;
                 state.isAuthenticated = false;

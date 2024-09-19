@@ -90,6 +90,11 @@ const loginUser = asyncHandler(async (req, res) => {
     res.cookie('token', token, { httpOnly: true, secure: false }).json({
         success: true,
         message: 'Logged in Successfully',
+        user: {
+            id: registeredUser._id,
+            role: registeredUser.role,
+            email: registeredUser.email,
+        },
     });
 });
 
