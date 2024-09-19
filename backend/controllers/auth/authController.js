@@ -59,8 +59,38 @@ const loginUser = asyncHandler(async (req, res) => {
     // CHECKING WHETHER THE EMAIL IS ALREADY REGISTERED
     const registeredUser = await User.findOne({ email });
 
-    if (registeredUser) {
+    if (!registeredUser) {
+        return res.json({
+            success: false,
+            message: "User doesn't Exist!",
+        });
     }
+
+    const checkMatch = await bcrypt.compare(password, registeredUser.password);
+
+    if (!checkMatch) {
+        return res.json({
+            success: false,
+            message: 'Invalid Credentials',
+        });
+    }
+
+    const token = jwt.sign(
+        {
+            id: registeredUser._id,
+            role: registeredUser.role,
+            email: registeredUser.email,
+        },
+        process.env.TOKEN_SECRET,
+        {
+            expiresIn: '60m',
+        }
+    );
+
+    res.cookie('token', token, { httpOnly: true, secure: false }).json({
+        success: true,
+        message: 'Logged in Successfully',
+    });
 });
 
-module.exports = { registerUser };
+module.exports = { registerUser, loginUser };
