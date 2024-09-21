@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const initialState = {
     isAuthenticated: false,
-    isLoading: false,
+    isLoading: true,
     user: null,
 };
 
@@ -40,23 +40,20 @@ export const loginUserAction = createAsyncThunk(
 );
 
 // CHECK AUTH THUNK
-export const checkAuth = createAsyncThunk(
-    '/auth/check-auth',
-    async () => {
-        const response = await axios.get(
-            'http://localhost:5000/api/auth/check-auth',
-            {
-                withCredentials: true,
-                headers: {
-                    'Cache-Control':
-                        'no-store, no-cache, must-revalidate, proxy-revalidate',
-                },
-            }
-        );
+export const checkAuth = createAsyncThunk('/auth/check-auth', async () => {
+    const response = await axios.get(
+        'http://localhost:5000/api/auth/check-auth',
+        {
+            withCredentials: true,
+            headers: {
+                'Cache-Control':
+                    'no-store, no-cache, must-revalidate, proxy-revalidate',
+            },
+        }
+    );
 
-        return response.data;
-    }
-);
+    return response.data;
+});
 
 const authSlice = createSlice({
     name: 'auth',
