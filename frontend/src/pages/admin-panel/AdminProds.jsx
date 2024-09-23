@@ -1,3 +1,4 @@
+import CommonImgUpload from '@/components/admin_comps/CommonImgUpload'
 import CommonForm from '@/components/common/CommonForm'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
@@ -20,6 +21,12 @@ const AdminProds = () => {
 
     const [openAddProductSheet, setOpenAddProductSheet] = useState(false)
     const [formData, setFormData] = useState(initialFormData)
+    const [imageFile, setImageFile] = useState(null)
+    const [uploadedImageUrl, setUploadedImageUrl] = useState('')
+
+    const submit = () => {
+
+    }
 
     return (
         <Fragment>
@@ -33,15 +40,17 @@ const AdminProds = () => {
             </div>
             <Sheet open={openAddProductSheet} onOpenChange={() => { setOpenAddProductSheet(false) }}>
                 <SheetContent side="right" className="overflow-auto">
-                    <SheetHeader>
-                        <SheetTitle>Add New Product</SheetTitle>
+                    <SheetHeader className="mb-3">
+                        <SheetTitle className="font-out_semi text-xl">Add New Product</SheetTitle>
                     </SheetHeader>
+                    <CommonImgUpload file={imageFile} setFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} />
                     <div className='py-6'>
                         <CommonForm
                             formControls={addProductFormElements}
                             formData={formData}
                             setFormData={setFormData}
                             buttonText="Add Product"
+                            onSubmit={submit}
                         />
                     </div>
                 </SheetContent>
