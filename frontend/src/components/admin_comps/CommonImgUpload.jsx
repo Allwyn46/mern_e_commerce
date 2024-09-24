@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import { UploadCloudIcon } from 'lucide-react'
+import { FileIcon, UploadCloudIcon, XIcon } from 'lucide-react'
+import { Button } from '../ui/button'
 
 const CommonImgUpload = ({ file, setFile, uploadedImageUrl, setUploadedImageUrl }) => {
 
@@ -15,11 +16,20 @@ const CommonImgUpload = ({ file, setFile, uploadedImageUrl, setUploadedImageUrl 
     }
 
     const handleDragOver = (e) => {
-
+        e.preventDefault()
     }
 
     const handleDrop = (e) => {
+        e.preventDefault()
+        const droppedFile = e.dataTransfer.files?.[0]
+        if (droppedFile) setFile(droppedFile)
+    }
 
+    const handleFileRemove = (e) => {
+        setFile(null)
+        if (inputRef.current) {
+            inputRef.current.value = ""
+        }
     }
 
     return (
@@ -33,7 +43,18 @@ const CommonImgUpload = ({ file, setFile, uploadedImageUrl, setUploadedImageUrl 
                             <UploadCloudIcon className='w-10 h-10 text-muted-foreground mb-3' />
                             <span>Drag & Drop or Click to upload image</span>
                         </Label>
-                        : <div></div>
+                        : <div className='flex items-center justify-between'>
+                            <div className='flex items-center'>
+                                <FileIcon className='w-8 text-primary h-8 mr-2' />
+                            </div>
+                            <p className='text-sm font-out_med'>
+                                {file.name}
+                            </p>
+
+                            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" onClick={handleFileRemove}>
+                                <XIcon className='w-4 h-4' /><span className='sr-only'>Remove</span>
+                            </Button>
+                        </div>
                 }
             </div>
         </div>
