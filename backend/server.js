@@ -6,6 +6,7 @@ const connectDb = require('./config/dbConnection');
 const errorHandler = require('./middlewares/errorHandler');
 require('dotenv').config();
 const authRouter = require('./routes/auth/authRoutes');
+const adminProductRouter = require('./routes/admin/productRoutes');
 
 // CONNECTING DB
 connectDb();
@@ -33,5 +34,6 @@ app.use(express.json());
 app.use(errorHandler);
 
 app.use('/api/auth', authRouter);
+app.use('/api/admin/products', adminProductRouter);
 
 app.listen(PORT, () => console.log(`server is now running ${PORT}`));
