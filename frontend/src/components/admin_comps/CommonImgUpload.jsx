@@ -5,7 +5,7 @@ import { FileIcon, UploadCloudIcon, XIcon } from 'lucide-react'
 import { Button } from '../ui/button'
 import axios from 'axios'
 
-const CommonImgUpload = ({ file, setFile, uploadedImageUrl, setUploadedImageUrl }) => {
+const CommonImgUpload = ({ file, setFile, uploadedImageUrl, setUploadedImageUrl, setImageLoadingState }) => {
 
     const inputRef = useRef(null)
 
@@ -33,30 +33,15 @@ const CommonImgUpload = ({ file, setFile, uploadedImageUrl, setUploadedImageUrl 
         }
     }
 
-    // const handleCloudinaryUpload = async () => {
-    //     const data = new FormData();
-    //     data.append('my_file', file)
-    //     const response = await axios.post('http://localhost:5000/api/admin/products/upload_image', data)
-    //     // console.log(response.data);
-    //     if (response) setUploadedImageUrl(response.data)
-    // }
-
     const handleCloudinaryUpload = async () => {
-        if (!file) {
-            console.error("No file selected for upload.");
-            return;
-        }
-
+        setImageLoadingState(true)
         const data = new FormData();
-        data.append('my_file', file);
-
-        try {
-            const response = await axios.post('http://localhost:5000/api/admin/products/upload_image', data);
-            if (response && response.data) {
-                setUploadedImageUrl(response.data);
-            }
-        } catch (error) {
-            console.log("Upload failed:", error);
+        data.append('my_file', file)
+        const response = await axios.post('http://localhost:5000/api/admin/products/upload_image', data)
+        // console.log(response.data);
+        if (response?.data?.success) {
+            setImageLoadingState(false)
+            setUploadedImageUrl(response.data.result.url)
         }
     }
 

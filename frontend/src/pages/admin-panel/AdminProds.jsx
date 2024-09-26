@@ -23,6 +23,7 @@ const AdminProds = () => {
     const [formData, setFormData] = useState(initialFormData)
     const [imageFile, setImageFile] = useState(null)
     const [uploadedImageUrl, setUploadedImageUrl] = useState('')
+    const [imageLoadingState, setImageLoadingState] = useState(false)
 
     const submit = () => {
 
@@ -43,7 +44,7 @@ const AdminProds = () => {
                     <SheetHeader className="mb-3">
                         <SheetTitle className="font-out_semi text-xl">Add New Product</SheetTitle>
                     </SheetHeader>
-                    <CommonImgUpload file={imageFile} setFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} />
+                    <CommonImgUpload file={imageFile} setFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} setImageLoadingState={setImageLoadingState} />
                     <div className='py-6'>
                         <CommonForm
                             formControls={addProductFormElements}
