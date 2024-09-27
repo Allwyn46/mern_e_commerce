@@ -6,8 +6,6 @@ const handleImageUpload = asyncHandler(async (req, res) => {
     const url = 'data:' + req.file.mimetype + ';base64,' + b64;
     const result = await imageUploadhelper(url);
 
-    console.log(result);
-
     if (result) {
         return res.json({
             success: true,
