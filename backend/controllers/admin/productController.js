@@ -14,4 +14,8 @@ const handleImageUpload = asyncHandler(async (req, res) => {
     }
 });
 
+const addProduct = asyncHandler(async(req,res)=>{
+    
+})
+
 module.exports = handleImageUpload;
