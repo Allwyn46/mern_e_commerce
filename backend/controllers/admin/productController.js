@@ -125,4 +125,10 @@ const deleteProduct = asyncHandler(async (req, res) => {
     });
 });
 
-module.exports = { handleImageUpload, addProduct, editProduct, deleteProduct };
+module.exports = {
+    handleImageUpload,
+    addProduct,
+    editProduct,
+    deleteProduct,
+    fetchAllProds,
+};
