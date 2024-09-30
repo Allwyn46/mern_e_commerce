@@ -53,4 +53,76 @@ const fetchAllProds = asyncHandler(async (req, res) => {
     });
 });
 
-module.exports = { handleImageUpload, addProduct };
+const editProduct = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.json({
+            success: false,
+            message: "id doesn't Exist in the params!",
+        });
+    }
+
+    const {
+        image,
+        title,
+        description,
+        category,
+        brand,
+        price,
+        salePrice,
+        totalStock,
+    } = req.body;
+
+    const prod = await Product.findById(id);
+
+    if (!prod) {
+        return res.status(404).json({
+            success: false,
+            message: "Product doesn't Exist!",
+        });
+    }
+
+    const updatedProduct = {
+        image: image || prod.image,
+        title: title || prod.title,
+        description: description || prod.description,
+        category: category || prod.category,
+        brand: brand || prod.brand,
+        price: price || prod.price,
+        salePrice: salePrice || prod.salePrice,
+        totalStock: totalStock || prod.totalStock,
+    };
+
+    const prodToUpdate = await Product.findByIdAndUpdate(id, updatedProduct, {
+        new: true,
+    });
+
+    res.status(200).json({
+        success: true,
+        message: 'Product updated successfully',
+        prod: prodToUpdate,
+    });
+});
+
+const deleteProduct = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const prod = await Product.findById(id);
+
+    if (!prod) {
+        return res.status(404).json({
+            success: false,
+            message: "Product doesn't Exist!",
+        });
+    }
+
+    const prodToDelete = await Product.findByIdAndDelete(id);
+
+    res.status(200).json({
+        success: true,
+        message: 'Product deleted successfully',
+    });
+});
+
+module.exports = { handleImageUpload, addProduct, editProduct, deleteProduct };
