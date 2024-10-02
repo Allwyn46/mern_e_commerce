@@ -66,5 +66,20 @@ const adminProdSlice = createSlice({
     name: 'adminProdSlice',
     initialState: iniatialState,
     reducers: {},
-    extraReducers: (builder) => {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchAllProds.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchAllProds.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.productList = action.payload;
+            })
+            .addCase(fetchAllProds.rejected, (state, action) => {
+                state.isLoading = false;
+                state.productList = [];
+            });
+    },
 });
+
+export default adminProdSlice.reducer;
