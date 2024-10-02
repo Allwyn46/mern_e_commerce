@@ -3,8 +3,10 @@ import CommonForm from '@/components/common/CommonForm'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { addProductFormElements } from '@/config/config'
-import React, { useState } from 'react'
+import { addNewProduct, fetchAllProds } from '@/store/admin/product-slice/adminProdSlice'
+import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const initialFormData = {
     image: null,
@@ -24,10 +26,24 @@ const AdminProds = () => {
     const [imageFile, setImageFile] = useState(null)
     const [uploadedImageUrl, setUploadedImageUrl] = useState('')
     const [imageLoadingState, setImageLoadingState] = useState(false)
+    const { productList } = useSelector(state => state.adminProds)
+    const dispatch = useDispatch();
 
-    const submit = () => {
-
+    const submit = (e) => {
+        e.preventDefault();
+        dispatch(addNewProduct({
+            ...formData,
+            image: uploadedImageUrl
+        })).then((data)=>{
+            console.log(data)
+        })
     }
+
+    useEffect(() => {
+        dispatch(fetchAllProds)
+    }, [dispatch])
+
+    console.log(uploadedImageUrl)
 
     return (
         <Fragment>
@@ -44,7 +60,7 @@ const AdminProds = () => {
                     <SheetHeader className="mb-3">
                         <SheetTitle className="font-out_semi text-xl">Add New Product</SheetTitle>
                     </SheetHeader>
-                    <CommonImgUpload file={imageFile} setFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} setImageLoadingState={setImageLoadingState} />
+                    <CommonImgUpload file={imageFile} setFile={setImageFile} uploadedImageUrl={uploadedImageUrl} setUploadedImageUrl={setUploadedImageUrl} setImageLoadingState={setImageLoadingState} imageLoadingState={imageLoadingState} />
                     <div className='py-6'>
                         <CommonForm
                             formControls={addProductFormElements}
