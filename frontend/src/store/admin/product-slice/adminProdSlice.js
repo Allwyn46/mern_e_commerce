@@ -19,7 +19,46 @@ export const addNewProduct = createAsyncThunk(
             }
         );
 
-        return response.data;
+        return response?.data;
+    }
+);
+
+export const fetchAllProds = createAsyncThunk(
+    '/products/all-products',
+    async () => {
+        const response = await axios.get(
+            `${process.env.API}/admin/products/all-products`
+        );
+
+        return response?.data;
+    }
+);
+
+export const editProduct = createAsyncThunk(
+    '/products/edit-product',
+    async ({ id, formData }) => {
+        const response = await axios.put(
+            `${process.env.API}/admin/products/edit-product/${id}`,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        return response?.data;
+    }
+);
+
+export const deleteProduct = createAsyncThunk(
+    '/products/delete-product',
+    async (id) => {
+        const response = await axios.delete(
+            `${process.env.API}/admin/products/delete-product/${id}`
+        );
+
+        return response?.data;
     }
 );
 
