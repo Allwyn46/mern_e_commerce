@@ -7,6 +7,7 @@ import { addNewProduct, fetchAllProds } from '@/store/admin/product-slice/adminP
 import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'sonner'
 
 const initialFormData = {
     image: null,
@@ -34,16 +35,20 @@ const AdminProds = () => {
         dispatch(addNewProduct({
             ...formData,
             image: uploadedImageUrl
-        })).then((data)=>{
-            console.log(data)
+        })).then((data) => {
+            if (data?.payload?.success) {
+                dispatch(fetchAllProds())
+                setOpenAddProductSheet(false)
+                setImageFile(null)
+                setFormData(initialFormData)
+                toast('Product Added Successfully')
+            }
         })
     }
 
     useEffect(() => {
         dispatch(fetchAllProds)
     }, [dispatch])
-
-    console.log(uploadedImageUrl)
 
     return (
         <Fragment>
