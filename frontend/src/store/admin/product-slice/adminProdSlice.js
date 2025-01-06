@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const iniatialState = {
+// Corrected spelling of initialState
+const initialState = {
     isLoading: false,
     productList: [],
 };
@@ -31,6 +32,7 @@ export const fetchAllProds = createAsyncThunk(
         );
 
         return response?.data;
+        console.log(response?.data);
     }
 );
 
@@ -63,8 +65,8 @@ export const deleteProduct = createAsyncThunk(
 );
 
 const adminProdSlice = createSlice({
-    name: 'adminProdSlice',
-    initialState: iniatialState,
+    name: 'adminProds',
+    initialState, // Use the corrected initialState
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -74,8 +76,9 @@ const adminProdSlice = createSlice({
             .addCase(fetchAllProds.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.productList = action.payload.data;
+                console.log(action.payload.data);
             })
-            .addCase(fetchAllProds.rejected, (state, action) => {
+            .addCase(fetchAllProds.rejected, (state) => {
                 state.isLoading = false;
                 state.productList = [];
             });

@@ -74,7 +74,7 @@ const editProduct = asyncHandler(async (req, res) => {
         totalStock,
     } = req.body;
 
-    const prod = await Product.findById(id);
+    let prod = await Product.findById(id);
 
     if (!prod) {
         return res.status(404).json({
@@ -89,13 +89,13 @@ const editProduct = asyncHandler(async (req, res) => {
         description: description || prod.description,
         category: category || prod.category,
         brand: brand || prod.brand,
-        price: price || prod.price,
-        salePrice: salePrice || prod.salePrice,
+        price: price === '' ? 0 : price || prod.price,
+        salePrice: salePrice === '' ? 0 : salePrice || prod.salePrice,
         totalStock: totalStock || prod.totalStock,
     };
 
     const prodToUpdate = await Product.findByIdAndUpdate(id, updatedProduct, {
-        new: true,
+        new: false,
     });
 
     res.status(200).json({

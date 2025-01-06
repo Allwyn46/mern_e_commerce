@@ -11,7 +11,7 @@ const fieldTypes = {
     TEXTAREA: 'textarea'
 }
 
-const CommonForm = ({ formControls, formData, setFormData, onSubmit, buttonText }) => {
+const CommonForm = ({ formControls, formData, setFormData, onSubmit, buttonText, isBtnDisabled }) => {
 
     // RENDERING INPUTS BASED ON COMPONENT TYPE MENTIONED IN THE CONFIG JS
 
@@ -109,7 +109,7 @@ const CommonForm = ({ formControls, formData, setFormData, onSubmit, buttonText 
                 }
             </div>
 
-            <Button type="submit" className="mt-3 w-full">
+            <Button disabled={isBtnDisabled} type="submit" className="mt-3 w-full">
                 {buttonText || 'Submit'}
             </Button>
 
